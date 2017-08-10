@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.JCheckBox;
 
 public class ApplicationWindow {
 
@@ -41,6 +42,7 @@ public class ApplicationWindow {
 	private JLabel labelGigaNonces;
 	private JLabel lblByteNonces;
 	private JTextField textField_5;
+	JCheckBox chckbxTrue;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -240,6 +242,10 @@ public class ApplicationWindow {
 		textField_5.setBounds(232, 304, 396, 20);
 		panel.add(textField_5);
 		
+		chckbxTrue = new JCheckBox("Optimized");
+		chckbxTrue.setBounds(232, 185, 97, 23);
+		panel.add(chckbxTrue);
+		
 		
 	}
 
@@ -253,6 +259,11 @@ public class ApplicationWindow {
 	}
 
 	protected void createBatFiles() throws Exception {
+		String b="buffer";
+		if(chckbxTrue.isSelected()) {b="direct";}
+		
+		
+		
 		String numberid="14746343823958034201";
 		
 		BigInteger zacetek=new BigInteger(textField_2.getText());
@@ -278,7 +289,7 @@ public class ApplicationWindow {
 		String rez="";
 		for(int i=0;i<stevilo_plotov;i++) {
 			zacetek=zacetek.add(new BigInteger("1"));
-			String temp="gpuPlotGenerator generate buffer "+label+":\\"+numberid+"_"+(zacetek)+"_"+sizeOfBlock+"_"+Integer.parseInt(textField_4.getText());
+			String temp="gpuPlotGenerator generate "+b+" "+label+":\\"+numberid+"_"+(zacetek)+"_"+sizeOfBlock+"_"+Integer.parseInt(textField_4.getText());
 			//tole u file "+label+"_plot"+i+;
 			zacetek=zacetek.add(new BigInteger(sizeOfBlock+""));
 			try (PrintStream out = new PrintStream(new FileOutputStream(label+"plot_"+i+".bat"))) {
@@ -302,10 +313,11 @@ public class ApplicationWindow {
 			
 		}
 		
-		//plotting the remainder
+		//poplottat se ostanek
 		if(ostanek>4096) {
 			zacetek=zacetek.add(new BigInteger("1"));
-			String temp="gpuPlotGenerator generate buffer "+label+":\\"+numberid+"_"+(zacetek)+"_"+sizeOfBlock+"_"+Integer.parseInt(textField_4.getText());
+			String temp="gpuPlotGenerator generate \"+b+\" "+label+":\\"+numberid+"_"+(zacetek)+"_"+sizeOfBlock+"_"+Integer.parseInt(textField_4.getText());
+		//tole u file "+label+"_plot"+i+;
 		zacetek=zacetek.add(new BigInteger(ostanek+""));
 		try (PrintStream out = new PrintStream(new FileOutputStream(label+"plot_"+stevilo_plotov+".bat"))) {
 		    out.print(temp);
