@@ -40,6 +40,7 @@ public class ApplicationWindow {
 	private JTextField txtBytes;
 	private JLabel labelGigaNonces;
 	private JLabel lblByteNonces;
+	private JTextField textField_5;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -122,42 +123,42 @@ public class ApplicationWindow {
 		textField.setText(s);
 		
 		JLabel lblSizeOfPlot = new JLabel("Size of plot in nonces:");
-		lblSizeOfPlot.setBounds(10, 107, 212, 14);
+		lblSizeOfPlot.setBounds(10, 86, 212, 14);
 		panel.add(lblSizeOfPlot);
 		
 		textField_1 = new JTextField();
 		textField_1.setText("4096000");
 		textField_1.setColumns(10);
-		textField_1.setBounds(232, 104, 396, 20);
+		textField_1.setBounds(232, 81, 396, 20);
 		panel.add(textField_1);
 		
 		JLabel lblStartingNonce = new JLabel("Starting nonce:");
-		lblStartingNonce.setBounds(10, 158, 212, 14);
+		lblStartingNonce.setBounds(10, 111, 212, 14);
 		panel.add(lblStartingNonce);
 		
 		textField_2 = new JTextField();
 		textField_2.setText("0");
 		textField_2.setColumns(10);
-		textField_2.setBounds(232, 155, 396, 20);
+		textField_2.setBounds(232, 108, 396, 20);
 		panel.add(textField_2);
 		
 		JLabel lblBurstNumericId = new JLabel("Burst numeric ID:");
-		lblBurstNumericId.setBounds(10, 218, 212, 14);
+		lblBurstNumericId.setBounds(10, 136, 212, 14);
 		panel.add(lblBurstNumericId);
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		textField_3.setBounds(232, 215, 396, 20);
+		textField_3.setBounds(232, 133, 396, 20);
 		panel.add(textField_3);
 		
 		JLabel lblAmountOfRam = new JLabel("Amount of RAM:");
-		lblAmountOfRam.setBounds(10, 268, 212, 14);
+		lblAmountOfRam.setBounds(10, 161, 212, 14);
 		panel.add(lblAmountOfRam);
 		
 		textField_4 = new JTextField();
 		textField_4.setText("32768");
 		textField_4.setColumns(10);
-		textField_4.setBounds(232, 265, 396, 20);
+		textField_4.setBounds(232, 158, 396, 20);
 		panel.add(textField_4);
 		
 		txtGigaBytes = new JTextField();
@@ -168,7 +169,7 @@ public class ApplicationWindow {
 		
 		JButton btnCreate = new JButton("Create .bat Files");
 		btnCreate.setForeground(Color.BLACK);
-		btnCreate.setBounds(180, 296, 289, 37);
+		btnCreate.setBounds(180, 213, 289, 37);
 		panel.add(btnCreate);
 		
 		btnCreate.addActionListener(new ActionListener()
@@ -200,12 +201,12 @@ public class ApplicationWindow {
 		});
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 344, 630, 2);
+		separator.setBounds(10, 363, 630, 2);
 		panel.add(separator);
 		
 		JLabel lblNonceCalculator = new JLabel("Nonce Calculator");
 		lblNonceCalculator.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNonceCalculator.setBounds(223, 357, 203, 20);
+		lblNonceCalculator.setBounds(223, 376, 203, 20);
 		panel.add(lblNonceCalculator);
 		
 		txtBytes = new JTextField();
@@ -229,6 +230,15 @@ public class ApplicationWindow {
 		labelGigaNonces = new JLabel("4096000");
 		labelGigaNonces.setBounds(363, 410, 265, 14);
 		panel.add(labelGigaNonces);
+		
+		JLabel lblNewStartingNonce = new JLabel("New Starting Nonce");
+		lblNewStartingNonce.setBounds(64, 307, 158, 14);
+		panel.add(lblNewStartingNonce);
+		
+		textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		textField_5.setBounds(232, 304, 396, 20);
+		panel.add(textField_5);
 		
 		
 	}
@@ -280,7 +290,7 @@ public class ApplicationWindow {
 			
 			
 			String temp2="@echo off\r\n" + 
-					"echo starting new plot >>\"log+"+label+".txt\"\r\n" + 
+					"echo starting new plot >>\"log"+label+".txt\"\r\n" + 
 					"echo starting "+label+"_plot"+i+" >>\"log"+label+".txt\"\r\n" + 
 					"@echo on\r\n" + 
 					"call "+label+"plot_"+i+"\r\n"+
@@ -292,11 +302,10 @@ public class ApplicationWindow {
 			
 		}
 		
-		//poplottat se ostanek
+		//plotting the remainder
 		if(ostanek>4096) {
 			zacetek=zacetek.add(new BigInteger("1"));
 			String temp="gpuPlotGenerator generate buffer "+label+":\\"+numberid+"_"+(zacetek)+"_"+sizeOfBlock+"_"+Integer.parseInt(textField_4.getText());
-		//tole u file "+label+"_plot"+i+;
 		zacetek=zacetek.add(new BigInteger(ostanek+""));
 		try (PrintStream out = new PrintStream(new FileOutputStream(label+"plot_"+stevilo_plotov+".bat"))) {
 		    out.print(temp);
@@ -307,7 +316,7 @@ public class ApplicationWindow {
 		
 		
 		String temp2="@echo off\r\n" + 
-				"echo Plotting the remainder >>\"log+"+label+".txt\"\r\n" + 
+				"echo Plotting the remainder >>\"log"+label+".txt\"\r\n" + 
 				"echo starting "+label+"_plot"+stevilo_plotov+" >>\"log"+label+".txt\"\r\n" + 
 				"@echo on\r\n" + 
 				"call "+label+"plot_"+stevilo_plotov+"\r\n"+
@@ -318,6 +327,8 @@ public class ApplicationWindow {
 		
 		}
 		
+		textField_5.setText(zacetek+"");
+		textField_2.setText(zacetek+"");
 		try (PrintStream out = new PrintStream(new FileOutputStream(label+"_hdd_Plotter_Start_me.bat"))) {
 		    out.print(rez);
 		}catch(Exception e) {
