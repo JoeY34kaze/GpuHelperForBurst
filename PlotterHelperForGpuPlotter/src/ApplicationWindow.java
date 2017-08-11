@@ -306,7 +306,7 @@ public class ApplicationWindow {
 					"@echo on\r\n" + 
 					"call "+label+"plot_"+i+"\r\n"+
 					"echo Plotting successful, deleting .bat file. >>\"log+"+label+".txt\"\r\n" + 
-					"del /f "+label+"plot_"+i+"\r\n";
+					"del /f "+label+"plot_"+i+".bat\r\n";
 
 			rez=rez+temp2;
 			
@@ -333,7 +333,7 @@ public class ApplicationWindow {
 				"@echo on\r\n" + 
 				"call "+label+"plot_"+stevilo_plotov+"\r\n"+
 				"echo remainder plotted successfully, deleting .bat file >>\"log"+label+".txt\" \r\n"+
-				"del /f "+label+"plot_"+stevilo_plotov+"\r\n";
+				"del /f "+label+"plot_"+stevilo_plotov+".bat\r\n";
 
 		rez=rez+temp2;
 		
