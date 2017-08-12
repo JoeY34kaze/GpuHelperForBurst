@@ -3,7 +3,7 @@ A program that makes life easier for plotting with GpuPlotter.
 
 How to use:
 
-0. compile it as jar file. or download it from my google drive https://drive.google.com/open?id=0ByZPs5ckrlVmYkJjVS1Pckpiak0
+0. compile it as jar file. or download it from my google drive https://drive.google.com/open?id=0ByZPs5ckrlVmUHgxdS1WbWw1X1k
 1. place it in the same folder as GpuPlotter. At the time of this writing it was tested on 4.1.1. 
    (https://github.com/bhamon/gpuPlotGenerator/releases)
 2. Run it by double click or in console by typing "java -jar gpuPlotterHelper"
