@@ -304,8 +304,8 @@ public class ApplicationWindow {
 					"echo starting new plot >>\"log"+label+".txt\"\r\n" + 
 					"echo starting "+label+"_plot"+i+" >>\"log"+label+".txt\"\r\n" + 
 					"@echo on\r\n" + 
-					"call "+label+"plot_"+i+"\r\n"+
-					"echo Plotting successful, deleting .bat file. >>\"log+"+label+".txt\"\r\n" + 
+					"call .\\"+label+"plot_"+i+"\r\n"+
+					"echo Plotting successful, deleting .bat file. >>\"log"+label+".txt\"\r\n" + 
 					"del /f "+label+"plot_"+i+".bat\r\n";
 
 			rez=rez+temp2;
@@ -343,6 +343,12 @@ public class ApplicationWindow {
 		textField_2.setText(zacetek+"");
 		try (PrintStream out = new PrintStream(new FileOutputStream(label+"_hdd_Plotter_Start_me.bat"))) {
 		    out.print(rez);
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(frmSimpleGpuplotterHelper, e.getMessage());
+
+		}
+		try (PrintStream out = new PrintStream(new FileOutputStream("NewStart"))) {
+		    out.print(zacetek);
 		}catch(Exception e) {
 			JOptionPane.showMessageDialog(frmSimpleGpuplotterHelper, e.getMessage());
 
